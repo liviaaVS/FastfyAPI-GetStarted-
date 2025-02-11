@@ -7,28 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Pessoa {
+model Professor {
   id       Int    @id @default(autoincrement())
   nome     String
   cpf      String @unique
   email    String @unique
   senha    String
-  cursos   Curso[] @relation("AutorCursos")
-}
-
-model Catalogo {
-  id          Int      @id @default(autoincrement())
-  nomeCatalogo String
-  cursos      Curso[]
+  cursos   Curso[] @relation("Professor")
 }
 
 model Curso {
   id          Int      @id @default(autoincrement())
   nomeCurso   String
-  autorId     Int?
-  idCatalogo  Int?
-  autor       Pessoa?  @relation("AutorCursos", fields: [autorId], references: [id])
-  catalogo    Catalogo? @relation(fields: [idCatalogo], references: [id])
+  professorId     Int?
+  professor       Professor?  @relation("Professor", fields: [professorId], references: [id])
   aulas       Aula[]
 }
 
